@@ -1,0 +1,44 @@
+{% extends 'mybl/base.html' %}
+{% block header %}
+<div class="card card-body border-dark my-2 bg-dark text-white">
+    <h5>
+      <span class="d-flex justify-content-between">
+        {{ bpost.header }}
+        <small>
+          {{ bpost.date_added|date:'M d, Y H:i' }}
+        </small>
+      </span>
+    </h5>
+  <div class="card card-body text-dark">
+    <main>{{ bpost.main|linebreaksbr }}</main>
+  </div>
+  <a class="text-right text-secondary" href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
+</div>
+{% endblock header %}
+{% block content %}
+<div class="col text-center">Комментарии:</div>
+{% for comment in comments %}
+<div class="card card-body my-2 bg-secondary text-white">
+  <span class="d-flex justify-content-end">
+    {{ comment.date_added|date:'M d, Y H:i' }}
+  </span>
+  <div class="card card-body text-dark field-__str__">
+    {{ comment.text|linebreaksbr }}
+  </div>
+</div> 
+{% empty %}
+  Здесь еще нет комментариев
+{% endfor %}
+<div class="text-center">Добaвить новый комментарий:</div>
+<div class="d-flex justify-content-center">
+  <div class="form-group" id='new_comment'></div>
+    <form action="{% url 'bpost' bpost.id %}" method='post'>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="col text-center">
+        <button class='btn btn-primary' name='submit'>Добавить</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}

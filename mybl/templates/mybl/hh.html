@@ -1,0 +1,73 @@
+{% extends "mybl/base.html" %}
+{% load static %}
+{% block content %}
+<div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
+  <table class='table-sm table-dark table-striped table-bordered'>
+    <caption style='caption-side: top'><small>Количество вакансий, процент вакансий без опыта, соотношение резюме к вакансиям за сегодня.</small></caption>
+    {% for lang in langs %}
+      <tr>
+        {% if lang.name == 'C%23' %}
+          <td>
+          {{ 'C#' }}
+          </td>
+        {% elif lang.name == 'c%2B%2B' %}
+          <td>
+          {{ 'C++' }}
+          </td>
+        {% else %}
+          <td>
+          {{ lang.name }}
+          </td>
+        {% endif %}
+        <td class='text-right'>
+          {{ lang.val }}
+        </td>
+        <td class='text-right'>
+          {{ lang.val_noexp }}
+        </td>
+        <td class='text-right'>
+          {{ lang.res_vac }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  <table class='table-sm table-dark table-striped table-bordered mt-4'>
+    <caption style='caption-side: top'><small>Изменение от среднего за декабрь 2020 в %.</small></caption>
+    {% for chart in charts %}
+      <tr>
+        {% if chart.name == 'C%23' %}
+          <td>
+          {{ 'C#' }}
+          </td>
+        {% elif chart.name == 'c%2B%2B' %}
+          <td>
+          {{ 'C++' }}
+          </td>
+        {% else %}
+          <td>
+          {{ chart.name }}
+          </td>
+        {% endif %}
+        <td class='color text-right'>
+          {{ chart.cnd_val }}
+        </td>
+        <td class='color text-right'>
+          {{ chart.cnd_vn }}
+        </td>
+        <td class='color-inv text-right'>
+          {{ chart.cnd_rv }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  <div class='d-flex'>
+    <canvas id="line-chart" width="800" height="450"></canvas>
+  </div>
+  <script type="text/javascript">
+    var received_data  = {{ graphs|safe }};
+    //console.log(received_data);
+  </script>
+<script src="{% static 'mybl/hh.js' %}"></script>
+{% endblock content %}
+</div>
+</div>
