@@ -10,7 +10,7 @@
           <td>
           {{ 'C#' }}
           </td>
-        {% elif lang.name == 'c%2B%2B' %}
+        {% elif lang.name == 'cpp' %}
           <td>
           {{ 'C++' }}
           </td>
@@ -39,7 +39,7 @@
           <td>
           {{ 'C#' }}
           </td>
-        {% elif chart.name == 'c%2B%2B' %}
+        {% elif chart.name == 'cpp' %}
           <td>
           {{ 'C++' }}
           </td>
@@ -60,8 +60,18 @@
       </tr>
     {% endfor %}
   </table>
-  <div class='d-flex mt-4'>
+  <!-- div class='d-flex mt-4'>
     <canvas id="line-chart" width="800" height="450"></canvas>
+  </div -->
+    <div class='flex-wrap mt-4'>
+    <div class='radWin d-flex justify-content-around'>
+      <div>
+        <label>Окно скользящего среднего: <input type='radio' id='w7' name='win' value="7" checked="checked">7</label>
+        <label><input type='radio' id='w14' name='win' value="14">14</label>
+        <label><input type='radio' id='w28' name='win' value="28">28</label>
+      </div>
+    </div>
+    <div><canvas id="line-chart" width="800" height="450"></canvas></div>
   </div>
   <script type="text/javascript">
     var received_data  = {{ graphs|safe }};
