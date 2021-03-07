@@ -75,29 +75,35 @@
       </div>
     </div>
     <div><canvas id="line-chart" width="800" height="450"></canvas></div>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart2" width="800" height="450"></canvas>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart3" width="800" height="450"></canvas>
-  </div>
+    </div>
     <div class='d-flex'>
-    <canvas id="line-chart4" width="800" height="450"></canvas>
+      <canvas id="line-chart2" width="800" height="450"></canvas>
+    </div>
+    <div class='d-flex'>
+      <canvas id="line-chart3" width="800" height="450"></canvas>
+    </div>
+      <div class='d-flex'>
+      <canvas id="line-chart4" width="800" height="450"></canvas>
+    </div>
+    <div class='d-flex'>
+      <canvas id="line-chart5" width="800" height="450"></canvas>
+    </div>
+    <div class='d-flex'>
+      <canvas id="line-chart6" width="800" height="450"></canvas>
+    </div>
+    <div class='d-flex'>
+      <canvas id="line-chart7" width="800" height="450"></canvas>
+    </div>
+    <div class='d-flex'>
+      <canvas id="line-chart8" width="800" height="450"></canvas>
+    </div>
+    <div class='d-flex'>
+      <canvas id="line-chart9" width="800" height="450"></canvas>
+    </div>
+    <script type="text/javascript">
+      var received_data  = {{ tickers50|safe }};
+    </script>
+    <script src="{% static 'mybl/tickers.js' %}"></script>
+    {% endblock content %}
   </div>
-  <div class='d-flex'>
-    <canvas id="line-chart5" width="800" height="450"></canvas>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart6" width="800" height="450"></canvas>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart7" width="800" height="450"></canvas>
-  </div>
-  <script type="text/javascript">
-    var received_data  = {{ tickers50|safe }};
-  </script>
-  <script src="{% static 'mybl/tickers.js' %}"></script>
-  {% endblock content %}
-</div>
 </div>
