@@ -229,7 +229,7 @@ def tickers(request):
         return t_dict
     
     date_today = date.today().strftime("%Y-%m-%d")
-    date7 = (date.today() - timedelta(27)).strftime("%Y-%m-%d")
+    date7 = (date.today() - timedelta(7)).strftime("%Y-%m-%d")
     tickers = Ticker.objects.filter(Q(date_added = date_today))
     context = {'tickers': tickers}
     
