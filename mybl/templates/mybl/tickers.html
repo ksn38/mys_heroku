@@ -73,32 +73,49 @@
         <label><input type='radio' id='w30' name='win' value="30">30</label>
         <label><input type='radio' id='w50' name='win' value="50">50</label>
       </div>
-    </div>
-    <div><canvas id="line-chart" width="800" height="450"></canvas></div>
-    </div>
-    <div class='d-flex'>
-      <canvas id="line-chart2" width="800" height="450"></canvas>
+    <div class='d-flex justify-content-center flex-wrap'>
+      <input type="number" id="offset-input" value='0' min="0">
+      <input type="submit" class="button" id="offset" value="offset">
     </div>
     <div class='d-flex'>
-      <canvas id="line-chart3" width="800" height="450"></canvas>
-    </div>
       <div class='d-flex'>
-      <canvas id="line-chart4" width="800" height="450"></canvas>
+        <canvas id="line-chart" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart2" width="800" height="450"></canvas>
+      </div>
     </div>
     <div class='d-flex'>
-      <canvas id="line-chart5" width="800" height="450"></canvas>
+      <div class='d-flex'>
+        <canvas id="line-chart7" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart8" width="800" height="450"></canvas>
+      </div>
     </div>
     <div class='d-flex'>
-      <canvas id="line-chart6" width="800" height="450"></canvas>
+      <div class='d-flex'>
+        <canvas id="line-chart3" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart4" width="800" height="450"></canvas>
+      </div>
     </div>
     <div class='d-flex'>
-      <canvas id="line-chart7" width="800" height="450"></canvas>
+      <div class='d-flex'>
+        <canvas id="line-chart5" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart6" width="800" height="450"></canvas>
+      </div>
     </div>
     <div class='d-flex'>
-      <canvas id="line-chart8" width="800" height="450"></canvas>
-    </div>
-    <div class='d-flex'>
-      <canvas id="line-chart9" width="800" height="450"></canvas>
+      <div class='d-flex'>
+        <canvas id="line-chart9" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart10" width="800" height="450"></canvas>
+      </div>
     </div>
     <script type="text/javascript">
       var received_data  = {{ tickers50|safe }};
