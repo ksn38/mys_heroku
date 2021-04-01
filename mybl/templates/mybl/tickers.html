@@ -24,9 +24,6 @@
         <tr>
           <td nowrap><input type='radio' id='r1000' name='period' value="1000">1000</td>
         </tr>
-        <tr>
-          <td nowrap><input type='radio' id='r5000' name='period' value="4800">5000</td>
-        </tr>
       </form>
     </table>
     <table class='table-sm table-dark table-striped table-bordered'>
@@ -128,7 +125,7 @@
       </div>
     </div>
     <script type="text/javascript">
-      var received_data = {{ tickers1050|safe }};
+      var received_data = {{ tickers50|safe }};
     </script>
     <script src="{% static 'mybl/tickers.js' %}"></script>
     {% endblock content %}
