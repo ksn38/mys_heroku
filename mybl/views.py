@@ -13,24 +13,29 @@ from bs4 import BeautifulSoup as bs
 from django.core import serializers
 from django.db.models import Q
 from mybl.psql_req import chart_langs, chart_tickers, langs_today, chart_langs_march
+import re
 
 
 def index(request):
-    def parser(dif):
+    def parser(dif, now):
         url = 'http://www.cbr.ru/scripts/XML_daily.asp'
         today = date.today() - timedelta(days=dif)
         dif = today.strftime("?date_req=%d/%m/%Y")
         response = requests.get(url + dif)
         currency = response.content.decode("cp1251").split('>')
         dict_curr = {}
+        date_delta = currency[1]
+
+        if now != True:
+            date_delta = re.sub('[^0-9.]', '', date_delta)
 
         for i in range(len(currency)):
             if currency[i] == '<CharCode':
                 dict_curr[currency[i + 1].split('<')[0]] = float(currency[i + 7].split('<')[0].replace(',', '.')) / float(currency[i + 3].split('<')[0])
 
-        return dict_curr
+        return dict_curr, date_delta
 
-    now = parser(0)
+    now = parser(0, now=True)
     
     today = date.today().weekday()
     delta = 1
@@ -43,16 +48,16 @@ def index(request):
     if(request.GET.get('mybtn')):
         delta = (int(request.GET.get('mytextbox')))
         
-    delta = parser(delta)
+    delta = parser(delta, now=False)
     order_dif = {}
 
-    for key in now.keys():
+    for key in now[0].keys():
         if key not in {'BYN', 'HUF', 'KGS', 'MDL', 'TJS', 'UZS', 'HKD', 'AZN', 'AMD', 'TMT', 'CZK', 'DKK', 'BGN', 'RON'}:
             try:
-                order_dif[key] = round((now[key] / delta[key] - 1) * 100, 2)
+                order_dif[key] = round((now[0][key] / delta[0][key] - 1) * 100, 2)
             except KeyError:
                 pass
-
+    
     order_dif_plus = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1], reverse=True))
     dif_plus = []
 
@@ -67,7 +72,7 @@ def index(request):
         if i[1] < 0:
             dif_minus.append(i)
 
-    context = {'dif_plus': dif_plus, 'dif_minus': dif_minus}
+    context = {'dif_plus': dif_plus, 'dif_minus': dif_minus, 'date_delta': delta[1]}
     return render(request, 'mybl/index.html', context)
 
 def blog(request):
@@ -146,7 +151,7 @@ def hh(request):
     def apivac(expir):
         vac = {}
 
-        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
+        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
             url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
             response = requests.get(url)
             val = json.loads(response.content.decode("utf-8"))
@@ -158,7 +163,7 @@ def hh(request):
     def parservac():
         res = {}
 
-        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
+        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
             url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&text=' + i
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
